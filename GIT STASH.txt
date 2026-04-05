@@ -1,0 +1,299 @@
+GIT STASH
+
+we cannot enter into the other branch without commited the code in the present branch, but we are not sure whether the code is correct or not so that we can one option to make the code to delete temparorily by using the stash command, in those stitatuions stash can be used
+
+To remove the code temporarily, the we can move to another branch and come back to set the code and again we can revert back the code using again the same stash .
+
+
+Example:
+
+
+master
+aws--c1
+    create
+
+Jagan
+aws-c1
+new data added=possible to switch the branch-without commit
+if first commit is there-again new data added-not possible to switch the branch without commiting it -in that situation we have to use the stash
+
+
+Assume you have master branch and you have file called aws , then you have one commit to that file after that you have  created another branch from the master called jagan so you checked to that branch and check same file and commit will be there.
+
+Here if you mofiy the aws gile and with out commit you can switvh to the other branch - that is possible because that file doesnot have a single commit in the jagan branch
+
+But when you commit the file first time means if the file has the single commit and again if we modify the data and trying to switch the branch without commiting the changes then error will throw like the below
+[root@ip-172-31-79-247 stash]# git checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+        aws
+Please commit your changes or stash them before you switch branches.
+Aborting
+[root@ip-172-31-79-247 stash]#
+=======================================================================================================================================================================================
+
+
+
+[root@ip-172-31-79-247 ~]# mkdir stash
+[root@ip-172-31-79-247 ~]#
+[root@ip-172-31-79-247 ~]#
+[root@ip-172-31-79-247 ~]# ll
+total 0
+drwxr-xr-x. 4 root root 101 Apr  5 07:51 pavithra
+drwxr-xr-x. 2 root root   6 Apr  5 08:13 stash
+[root@ip-172-31-79-247 ~]#
+[root@ip-172-31-79-247 ~]#
+[root@ip-172-31-79-247 ~]# cd stash
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git init
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint:   git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint:   git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /root/stash/.git/
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# touch aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git add aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# vim aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git commit -m "aws" aws
+[master (root-commit) 806aad5] aws
+ Committer: root <root@ip-172-31-79-247.ec2.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 2 insertions(+)
+ create mode 100644 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git log
+commit 806aad5963ef629afc8c5e681720373a39de68ea (HEAD -> master)
+Author: root <root@ip-172-31-79-247.ec2.internal>
+Date:   Sun Apr 5 08:14:56 2026 +0000
+
+    aws
+[root@ip-172-31-79-247 stash]# git checkout -b jagan
+Switched to a new branch 'jagan'
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 37 Apr  5 08:14 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# vim aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 61 Apr  5 08:15 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git sta
+git: 'sta' is not a git command. See 'git --help'.
+
+The most similar commands are
+        status
+        stage
+        stash
+[root@ip-172-31-79-247 stash]# git status
+On branch jagan
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   aws
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git checkout master
+M       aws
+Switched to branch 'master'
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git checkout -b jagan
+fatal: a branch named 'jagan' already exists
+[root@ip-172-31-79-247 stash]# git checkout jagan
+M       aws
+Switched to branch 'jagan'
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 61 Apr  5 08:15 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git commit -m "aws data modifed" aws
+[jagan 296c109] aws data modifed
+ Committer: root <root@ip-172-31-79-247.ec2.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 61 Apr  5 08:15 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# vim aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+        aws
+Please commit your changes or stash them before you switch branches.
+Aborting
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 80 Apr  5 08:16 aws
+[root@ip-172-31-79-247 stash]# git branch
+* jagan
+  master
+[root@ip-172-31-79-247 stash]# cat aws
+Hey azure
+i am the new to this one
+data added to this fil
+more data is addede
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git status
+On branch jagan
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   aws
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git stash
+Saved working directory and index state WIP on jagan: 296c109 aws data modifed
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# cat aws
+Hey azure
+i am the new to this one
+data added to this file
+[root@ip-172-31-79-247 stash]# git checkout master
+Switched to branch 'master'
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git checkout jagan
+Switched to branch 'jagan'
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 61 Apr  5 08:28 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# cat aws
+Hey azure
+i am the new to this one
+data added to this file
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git stash apply
+On branch jagan
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   aws
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# cat aws
+Hey azure
+i am the new to this one
+data added to this fil
+more data is addede
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git commit -m "data added" aws
+[jagan cff9745] data added
+ Committer: root <root@ip-172-31-79-247.ec2.internal>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# cat aws
+Hey azure
+i am the new to this one
+data added to this fil
+more data is addede
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+more data is addede
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git stash list
+stash@{0}: WIP on jagan: 296c109 aws data modifed
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git stash clear
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# git stash list
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]# ll
+total 4
+-rw-r--r--. 1 root root 80 Apr  5 08:28 aws
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+[root@ip-172-31-79-247 stash]#
+
+
+=======================================================================================================================================================================================
+
